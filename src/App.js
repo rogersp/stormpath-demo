@@ -5,15 +5,10 @@ import Layout from './component/Layout';
 import Login from './component/Login';
 import Home from './component/Home';
 
-
-// TODO: put in switcher between hosted config and local config
-
-ReactStormpath.init({
-    endpoints: {
-        //baseUri: 'https://appname.apps.stormpath.io'
-        //baseUri: 'http://localhost:3050'
-    }
-});
+// load config depending on environment
+let stormpathConfig = process.env.STORMPATH_CONFIG;
+console.log(`webui stormpath config: `, stormpathConfig.ReactApp);
+ReactStormpath.init(stormpathConfig.ReactApp);
 
 export default class App extends React.Component {    
     render() {            

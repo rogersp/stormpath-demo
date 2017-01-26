@@ -1,0 +1,7 @@
+{
+    "ReactApp": {
+        "endpoints": {
+            "baseUri": "https://<YOUR APP NAME HERE>.apps.stormpath.io"
+        }        
+    }           
+}

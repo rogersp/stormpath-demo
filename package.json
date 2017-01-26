@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node scripts/start.js"
+    "local": "node scripts/start-local.js",
+    "remote": "node scripts/start-remote.js"
   },
   "author": "",
   "license": "ISC",

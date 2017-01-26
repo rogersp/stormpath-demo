@@ -1,0 +1,3 @@
+node_modules/
+stormpath.config.local.json
+stormpath.config.remote.json
