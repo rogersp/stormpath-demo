@@ -1,39 +1,23 @@
 import path from 'path'
 import http from 'http'
+import cors from 'cors'
 import express from 'express'
 import stormpath from 'express-stormpath'
-import webpack from 'webpack'
-import webpackMiddleware from 'webpack-dev-middleware'
-import webpackConfig from '../webpack.config'
 
 let app = express();
 
-// stupid-simple request reqwrite middleware for handling front-end route direct requests
-// rewrite all non-"file requests" to "index.html"
-const rewriteMiddleware = (req, res, next) => {    
-    if (req.accepts('text/html') && req.url.indexOf('.') < 0) {    
-        console.log(`rewriting url ${req.url} to index.html`);
-        req.url = '/index.html';
-    }    
-    next();
-}
-app.use(rewriteMiddleware);
-
-// use webpack dev server middleware
-app.use(
-    webpackMiddleware(
-        webpack(webpackConfig), {
-            publicPath: '/'
-        }
-    )
-);
+// configure cors
+app.use(cors({    
+    origin: true,           // Response will have Access-Control-Allow-Origin header that matches request origin.
+    credentials: true       // Response will have Access-Control-Allow-Credentials header, so response will be exposed to the page.
+}));
 
 const startServer = () => {
     // fire up server
-    let port = 3050;
+    let port = 3030;
     let httpServer = http.createServer(app);
     httpServer.listen(port);  
-    console.log(`UI + API server listening on http://localhost:${port}`);
+    console.log(`API server listening on http://localhost:${port}`);
 }
 
 // configure stormpath
@@ -57,7 +41,4 @@ if  (config.ExpressApp) {
     app.on('stormpath.ready', () => {
         startServer();  
     });   
-}
-else {    
-    startServer();
 }

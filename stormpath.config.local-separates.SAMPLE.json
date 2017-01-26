@@ -1,0 +1,23 @@
+{
+    "ReactApp": {
+        "endpoints": {
+            "baseUri": "http://localhost:3030"
+        }              
+    },
+    "ExpressApp": {
+        "apiKey": {
+            "id": "<YOUR ID HERE>",
+            "secret": "<YOUR SECRET HERE>"
+        },
+        "application": {
+            "href": "https://api.stormpath.com/v1/applications/<YOUR APP ID HERE>"   
+        },
+        "web": {
+            "logout": {
+                "enabled": true,
+                "uri": "/oauth/revoke",
+                "nextUri": "/login"
+            }
+        }        
+    }                 
+}

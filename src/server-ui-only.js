@@ -1,7 +1,6 @@
 import path from 'path'
 import http from 'http'
 import express from 'express'
-import stormpath from 'express-stormpath'
 import webpack from 'webpack'
 import webpackMiddleware from 'webpack-dev-middleware'
 import webpackConfig from '../webpack.config'
@@ -33,31 +32,7 @@ const startServer = () => {
     let port = 3050;
     let httpServer = http.createServer(app);
     httpServer.listen(port);  
-    console.log(`UI + API server listening on http://localhost:${port}`);
+    console.log(`UI server listening on http://localhost:${port}`);
 }
 
-// configure stormpath
-// load config depending on environment
-let configEnv = process.env.NODE_ENV;
-console.log(`server configuration environment: ${configEnv}`);
-let configFile = `../stormpath.config.${configEnv}.json`;
-let config = require(configFile)
-
-// start server with or without stormpath middleware,
-// depending on if the "ExpressApp" element exists in our loaded config.
-if  (config.ExpressApp) {
-    app.use(
-        stormpath.init(app, Object.assign({
-            debug: 'info',
-            web: {
-                produces: ['application/json']
-            }
-        }, config.ExpressApp))
-    );
-    app.on('stormpath.ready', () => {
-        startServer();  
-    });   
-}
-else {    
-    startServer();
-}
+startServer();

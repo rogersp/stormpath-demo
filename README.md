@@ -7,14 +7,25 @@ This app demonstrates how the two can work together, in combination with the Sto
 Perform the steps below to satisfy prerequisites:
 
 * `npm install`
-* Rename `stormpath.config.local.SAMPLE.json` to `stormpath.config.local.json` and configure with appropriate values.
-* Rename `stormpath.config.remote.SAMPLE.json` to `stormpath.config.remote.json` and configure with appropriate values.
+* Copy or rename the following files so they exist without `.SAMPLE` in name, and modify their content to contain appropriate configuration values:
+    * `stormpath.config.local.SAMPLE.json`
+    * `stormpath.config.remote.SAMPLE.json`
+    * `stormpath.config.local-separates.SAMPLE.json`
 
-There are two possible modes of operation, which change who the React front-end components talk to:
+There are three possible modes of operation, which change who the React front-end components talk to:
 
-* **local**: communicate with our local Express backend API, which will relay requests to the Stormpath API.
-* **remote**: communicate directly with the Stormpath API, and bypassing our local Express backend API.
+* **local**: communicate with our local Express backend API (running at the same host address), which will relay requests to the Stormpath API.
+* **remote**: communicate directly with the Stormpath API, effectively ignoring/bypassing the local Express backend API.
+* **local-separates**: same as **local**, but the Express backend API is hosted elsewhere (in our case, a different port).
 
-Run the app in local OR remote mode:
+Run **ONE** of the following commands depending on your desired mode of operation, described above:
 
-`npm run local` -- **or** -- `npm run remote` 
+* `npm run local` 
+* `npm run remote` 
+* `npm run local-separates`
+
+## Issues
+
+This project was created to demonstrate incompatibility under the `local-separates` run configuration, between the React SDK and Express SDK.
+
+The primary issue is that under this configuration, the user is not automatically redirected to the login page after successful logout. A full browser refresh is necessary to trigger the redirect.
