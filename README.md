@@ -29,3 +29,9 @@ Run **ONE** of the following commands depending on your desired mode of operatio
 This project was created to demonstrate incompatibility under the `local-separates` run configuration, between the React SDK and Express SDK.
 
 The primary issue is that under this configuration, the user is not automatically redirected to the login page after successful logout. A full browser refresh is necessary to trigger the redirect.
+
+**UPDATE:** This can be resolved by maintaining a local token blacklist. The list should be populated when the token is revoked (i.e. on logout) and checked on every request where a token is used. 
+
+The react frontend only redirects to the login screen when a `401` response code is returned by a request to the `/me` API endpoint, which occurs immediately after a call to `/oauth/revoke` to log the user out.
+
+When `local` validation is used, the token provided in the `/me` call is still technically valid, and will remain so until it expires. Therefore it must be blacklisted and checked locally. 
